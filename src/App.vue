@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <main-view></main-view>
+    <main-view
+      :display="display">
+    </main-view>
   </div>
 </template>
 
@@ -9,8 +11,16 @@ import MainView from './components/MainView.vue'
 
 export default {
   name: 'App',
+
   components: {
     MainView
+  },
+
+  data() {
+    return {
+      display: 'bible'
+    }
+    
   }
 }
 </script>

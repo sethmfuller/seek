@@ -3,7 +3,9 @@
     <navigation></navigation> 
     <div id="container">
       <div class="chapter-button" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
-      <main-content></main-content>
+      <main-content
+        :display="display">
+      </main-content>
       <div class="chapter-button" id="right-chapter-button"><i class="material-icons">arrow_forward</i></div>
     </div>
   </main>
@@ -20,7 +22,9 @@ export default {
   components: {
     Navigation,
     MainContent
-}
+  },
+
+  props: ['display'],
 
 }
 </script>

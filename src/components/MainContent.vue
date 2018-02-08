@@ -1,8 +1,16 @@
 <template>
   <div>
-      <bible></bible>
-      <verse></verse>
-      <search></search>
+      <bible 
+        v-if="this.display=='bible'">
+      </bible>
+
+      <verse
+        v-if="this.display=='verse'">
+      </verse>
+
+      <search
+        v-if="this.display=='search'">
+      </search>
   </div>
 </template>
 
@@ -20,6 +28,11 @@ components: {
   Verse,
   Search,
   DropDown
+},
+
+props: ['display'],
+
+computed: {
 }
 
 }
