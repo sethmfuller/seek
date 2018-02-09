@@ -18,7 +18,7 @@ export default {
 
   data() {
     return {
-      display: 'bible'
+      display: 'verse'
     }
     
   }
@@ -69,5 +69,11 @@ body
   text-align: center;
   display: flex;
   justify-content: center;
+}
+
+/* All verse numbers are style by this definition */
+sup
+{
+  color: rgba(43, 49, 60, 0.651);
 }
 </style>
