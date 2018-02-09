@@ -3,30 +3,22 @@
     <div id="book-selections">
       <div class="selection">
         <h2>Matthew</h2>
-        <i class="material-icons dropdowns">arrow_drop_down</i>
+        <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
       <div class="selection">
         <h2>12</h2>
-        <i class="material-icons dropdowns">arrow_drop_down</i>
+        <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
       <div class="selection">
         <h2>NLT</h2>
-        <i class="material-icons dropdowns">arrow_drop_down</i>
+        <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
     </div>
 
     <div id="site-navigation">
-
-      <div class="nav-button">
-        <i class="material-icons site-navs">book</i>
-      </div>
-      <div class="nav-button">
-        <i class="fas fa-fire fa-lg"></i>
-      </div>
-      <div class="nav-button">
-        <i class="material-icons site-navs">search</i>
-      </div>
-
+        <i class="material-icons site-navs noselect">book</i>
+        <i class="material-icons site-navs noselect">today</i>
+        <i class="material-icons site-navs noselect">search</i>
     </div>
   </nav>
 </template>
@@ -47,32 +39,21 @@ nav
     box-shadow: 0 0 5px rgba(0,0,0,.5);
     display: flex;
     align-items: center;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 #site-navigation
 {
   display: flex;
+  float: right;
 }
 
 .site-navs
 {
-  font-size: 24px;
-}
-
-.nav-button
-{
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 55px;
-  background-color: white;
-  color: #2B313C;
-  box-shadow: 0 0 5px rgba(0,0,0,.5);
+  font-size: 32px;
   cursor: pointer;
 }
-
 
 h2
 {
@@ -92,6 +73,7 @@ h2
   cursor: pointer;
   margin-top: 20px;
   margin-left: 20px;
+  float: left;
 }
 
 .selection

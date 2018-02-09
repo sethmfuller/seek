@@ -27,12 +27,36 @@ export default {
 
 <style>
 
+/* Elements with this class will not be selectable */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+::selection {
+  background: rgba(102, 58, 184, 0.774);
+  color: white;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: rgba(102, 58, 184, 0.774);
+  color: white;
+  text-shadow: none;
+}
+
 body
 {
   width: 100vw;
   height: 100vh;
   margin: 0px;
   background-color: #2B313C;
+  background-image: url('./assets/Background.png');
+  background-size: 150vh;
 }
 #app 
 {

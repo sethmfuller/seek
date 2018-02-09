@@ -2,11 +2,11 @@
   <main>
     <navigation></navigation> 
     <div id="container">
-      <div class="chapter-button" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
+      <div class="chapter-button noselect" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
       <main-content
         :display="display">
       </main-content>
-      <div class="chapter-button" id="right-chapter-button"><i class="material-icons">arrow_forward</i></div>
+      <div class="chapter-button noselect" id="right-chapter-button"><i class="material-icons">arrow_forward</i></div>
     </div>
   </main>
 </template>
@@ -40,6 +40,7 @@ main
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-radius: 2px;
 }
 
 #container
