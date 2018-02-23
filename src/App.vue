@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
     <main-view
       :display="display">
     </main-view>
@@ -69,6 +70,14 @@ body
   text-align: center;
   display: flex;
   justify-content: center;
+}
+
+#logo
+{
+  position: absolute;
+  width: 121px;
+  height: 95.22px;
+  left: 30px;
 }
 
 /* All verse numbers are style by this definition */
