@@ -9,20 +9,23 @@
 
 <script>
 import MainView from './components/MainView.vue'
+// import {fetchVerseOfDay} from './api/api_calls.js'
 
 export default {
-  name: 'App',
 
-  components: {
-    MainView
-  },
+name: 'App',
 
-  data() {
-    return {
-      display: 'verse'
-    }
-    
+components: 
+{
+  MainView
+},
+
+data() {
+  return {
+    display: 'verse',
   }
+}, 
+
 }
 </script>
 
