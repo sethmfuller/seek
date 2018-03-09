@@ -4,7 +4,8 @@
     <main-view
       @changeView="changeView"
       :view="view"
-      :apiData="apiData">
+      :bible="bible"
+      :verse="verse">
     </main-view>
   </div>
 </template>
@@ -23,8 +24,9 @@ components: {
 
 data() {
   return {
-    view: 'verse',
-    apiData: ''
+    view: 'bible',
+    bible: '',
+    verse: ''
   }
 },
 
@@ -35,9 +37,12 @@ methods: {
   {
     this.view = info;
   }
-  
+},
+
+created: function() {
+  fetchData('genesis 1').then(data => this.bible = data);
+  fetchData('matthew 1:2').then(data => this.verse = data);
 }
-// fetchData(info).then(data => this.apiData = data);
 }
 </script>
 

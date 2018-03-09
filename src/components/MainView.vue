@@ -1,10 +1,17 @@
 <template>
   <main>
-    <navigation @changeView="changeView"></navigation> 
+    <navigation 
+      @changeView="changeView"
+      :view="view"
+      :bible="bible"
+      :verse="verse"
+    ></navigation> 
     <div id="container">
       <div class="chapter-button noselect" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
       <main-content
-        :view="view">
+        :view="view"
+        :bible="bible"
+        :verse="verse">
       </main-content>
       <div class="chapter-button noselect" id="right-chapter-button"><i class="material-icons">arrow_forward</i></div>
     </div>
@@ -24,7 +31,7 @@ export default {
     MainContent
   },
 
-  props: ['view'],
+  props: ['view', 'bible', 'verse'],
 
   methods: {
     // Change View

@@ -2,11 +2,12 @@
   <div>
       <bible 
         v-if="this.view=='bible'"
-        :apiData="apiData">
+        :bible="bible">
       </bible>
 
       <verse
-        v-if="this.view=='verse'">
+        v-if="this.view=='verse'"
+        :verse="verse">
       </verse>
 
       <search
@@ -31,7 +32,7 @@ components: {
   DropDown
 },
 
-props: ['view', 'apiData'],
+props: ['view', 'bible', 'verse'],
 
 computed: {
 }

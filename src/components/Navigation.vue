@@ -2,11 +2,11 @@
   <nav>
     <div id="book-selections">
       <div class="selection">
-        <h2>Matthew</h2>
+        <h2>{{info.bookname}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
       <div class="selection">
-        <h2>12</h2>
+        <h2>{{info.chapter}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
       <div class="selection">
@@ -36,12 +36,36 @@
 export default {
 name: 'navigation',
 
+props: ['view', 'bible', 'verse'],
+
 methods: {
   // Change to Verse View
   changeView: function(view){
     this.$emit('changeView', view);
   }
 },
+
+computed: {
+
+  info: function() {
+    if (this.view == "verse") {
+      console.log(verse.reference);
+     var arrayOfStrings = this.verse.reference.split(' ');
+     return {
+       bookname: arrayOfStrings[0],
+       chapter: arrayOfStrings[1]
+     }
+    }
+    else {
+      var arrayOfStrings = this.bible.reference.split(' ');
+      return {
+        bookname: arrayOfStrings[0],
+        chapter: arrayOfStrings[1]
+     }
+    }
+  }
+}
+
 }
 </script>
 

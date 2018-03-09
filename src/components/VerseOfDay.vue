@@ -4,13 +4,15 @@
             <i class="material-icons noselect" id="today-icon">today</i>
             <h3>Verse of the Day</h3>
         </div>
-        <p id="verse"><sup>12</sup>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+        <p id="verse"><sup>{{verse.verses['0'].verse}}</sup>{{verse.text}}</p>
     </div>
 </template>
 
 <script>
 export default {
-    name: "verse-of-day"
+    name: "verse-of-day",
+
+    props: ['verse']
 
 }
 </script>

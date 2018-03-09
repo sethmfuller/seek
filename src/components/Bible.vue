@@ -1,7 +1,7 @@
 <template>
     <div id="text">
-        <br>
-        {{apiData.text}}
+        <h3>{{bible.reference}}</h3>
+        {{bible.text}}
     <br><br>
     </div>
 </template>
@@ -10,7 +10,12 @@
 export default {
 name: 'bible',
 
-props: ['apiData']
+props: ['bible'],
+
+computed: {
+    
+}
+
 }
 </script>
 
@@ -25,6 +30,12 @@ props: ['apiData']
     flex-direction: column;
     text-align: start;
     overflow-y: scroll;
+}
+
+h3 
+{
+    text-align: center;
+    font-size: 30px;
 }
 
 </style>
