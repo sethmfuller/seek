@@ -1,15 +1,16 @@
 <template>
   <div>
       <bible 
-        v-if="this.display=='bible'">
+        v-if="this.view=='bible'"
+        :apiData="apiData">
       </bible>
 
       <verse
-        v-if="this.display=='verse'">
+        v-if="this.view=='verse'">
       </verse>
 
       <search
-        v-if="this.display=='search'">
+        v-if="this.view=='search'">
       </search>
   </div>
 </template>
@@ -30,7 +31,7 @@ components: {
   DropDown
 },
 
-props: ['display'],
+props: ['view', 'apiData'],
 
 computed: {
 }

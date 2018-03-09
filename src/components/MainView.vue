@@ -1,10 +1,10 @@
 <template>
   <main>
-    <navigation></navigation> 
+    <navigation @changeView="changeView"></navigation> 
     <div id="container">
       <div class="chapter-button noselect" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
       <main-content
-        :display="display">
+        :view="view">
       </main-content>
       <div class="chapter-button noselect" id="right-chapter-button"><i class="material-icons">arrow_forward</i></div>
     </div>
@@ -24,7 +24,14 @@ export default {
     MainContent
   },
 
-  props: ['display'],
+  props: ['view'],
+
+  methods: {
+    // Change View
+    changeView: function(view){
+      this.$emit('changeView', view);
+    }
+  }
 
 }
 </script>

@@ -1,29 +1,20 @@
+const origin = "bible-api.com";
 
-// const fetchVerseOfDay = () =>
-// {
-//     // GET /image.jpg
-//     Vue.$http.get('/john%3:16', {responseType: 'json'}).then(response => {
-    
-//         // resolve to Blob
-//         return response.json();
-    
-//     }).then(json => {
-//         // use image Blob
-//     });
-// }
+const fetchData = (request) => {
+    const req = new Request(`http://${origin}/${request}`, {
+        method: 'GET',
+    });
 
-const fetchVerseOfDay = () =>
-{
-
-    // GET request
-    this.$http.get('http://bible-api.com/john%203:16', function (data, status, request) {
-
-        // set data on vm
-        this.$set('origin', data)
-
-    }).error(function (data, status, request) {
-        // handle error
-    })
+    return returnGetData(req);
 }
 
-export {fetchVerseOfDay};
+const returnGetData = req => (
+    fetch(req).then(res =>
+        res.json().then(data =>
+            data
+        )
+    )
+);
+
+
+export {fetchData};

@@ -16,9 +16,18 @@
     </div>
 
     <div id="site-navigation">
-        <i class="material-icons site-navs noselect">book</i>
-        <i class="material-icons site-navs noselect">today</i>
-        <i class="material-icons site-navs noselect">search</i>
+        <i 
+          class="material-icons site-navs noselect"
+          @click="changeView('bible')"
+        >book</i>
+        <i 
+          class="material-icons site-navs noselect"
+          @click="changeView('verse')"
+        >today</i>
+        <i 
+          class="material-icons site-navs noselect"
+          @click="changeView('search')"
+        >search</i>
     </div>
   </nav>
 </template>
@@ -27,6 +36,12 @@
 export default {
 name: 'navigation',
 
+methods: {
+  // Change to Verse View
+  changeView: function(view){
+    this.$emit('changeView', view);
+  }
+},
 }
 </script>
 
@@ -47,11 +62,13 @@ nav
 {
   display: flex;
   float: right;
+  margin-right: 20px;
 }
 
 .site-navs
 {
-  font-size: 32px;
+  font-size: 30px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -69,11 +86,11 @@ h2
 {
   height: 50px;
   display: flex;
-  justify-content: center;
   cursor: pointer;
   margin-top: 20px;
   margin-left: 20px;
   float: left;
+  flex: auto;
 }
 
 .selection

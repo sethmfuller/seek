@@ -2,30 +2,42 @@
   <div id="app">
     <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
     <main-view
-      :display="display">
+      @changeView="changeView"
+      :view="view"
+      :apiData="apiData">
     </main-view>
   </div>
 </template>
 
 <script>
 import MainView from './components/MainView.vue'
-// import {fetchVerseOfDay} from './api/api_calls.js'
+import {fetchData} from './api/api_calls.js'
 
 export default {
 
 name: 'App',
 
-components: 
-{
+components: {
   MainView
 },
 
 data() {
   return {
-    display: 'verse',
+    view: 'verse',
+    apiData: ''
   }
-}, 
+},
 
+methods: {
+
+  // Make api call
+  changeView: function(info) 
+  {
+    this.view = info;
+  }
+  
+}
+// fetchData(info).then(data => this.apiData = data);
 }
 </script>
 
