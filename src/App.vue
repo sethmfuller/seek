@@ -3,6 +3,8 @@
     <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
     <main-view
       @changeView="changeView"
+      @previousChapter="previousChapter"
+      @nextChapter="nextChapter"
       :view="view"
       :bible="bible"
       :verse="verse"
@@ -16,6 +18,7 @@
 <script>
 import MainView from './components/MainView.vue'
 import {fetchData} from './api/api_calls.js'
+import {chapters, books} from './assets/Bible.js'
 
 export default {
 
@@ -32,7 +35,9 @@ data() {
     verse: '',
     book: '',
     chapter: '',
-    version: ''
+    version: '',
+    bookid: '',
+    chapterid: ''
   }
 },
 
@@ -47,7 +52,45 @@ methods: {
       this.chapter = (info == "verse") ? this.verse.verses[0].chapter : this.bible.reference.split(' ')[1];
       this.version = (info == "verse") ? this.verse.translation_id.toUpperCase() : this.bible.translation_id.toUpperCase();
     }
-    
+  },
+
+  previousChapter: function() {
+    fetchData(`${this.computedPreviousChapter.name} ${this.computedPreviousChapter.number}`).then(data => {
+      this.bible = data;
+      this.book = data.reference.split(' ')[0];
+      this.chapter = data.reference.split(' ')[1];
+      this.version = data.translation_id.toUpperCase();
+    });
+  },
+
+  nextChapter: function() {
+
+  },
+},
+
+computed: {
+  computedPreviousChapter: function() {
+    if (this.chapterid == 1) {
+      this.bookid = (this.bookid == 1) ? 66 : this.bookid - 1;
+      this.chapterid = chapters[this.bookid - 1].length;
+      console.log(this.bookid);
+      console.log(this.chapterid);
+      return {
+        name: books[this.bookid-1],
+        number: this.chapterid
+      }
+    }
+    else {
+      this.chapterid--;
+      console.log(chapters[this.bookid].length - 1);
+      console.log("here");
+      console.log(this.bookid);
+      console.log(this.chapterid);
+      return {
+        name: books[this.bookid-1],
+        number:this.chapterid
+      }
+    }
   }
 },
 
@@ -57,6 +100,8 @@ created: function() {
     this.book = data.reference.split(' ')[0];
     this.chapter = data.reference.split(' ')[1];
     this.version = data.translation_id.toUpperCase();
+    this.bookid = 1;
+    this.chapterid = 1;
   });
   fetchData('matthew 12:2').then(data => this.verse = data);
 }

@@ -10,13 +10,23 @@
       :version="version"
     ></navigation> 
     <div id="container">
-      <div class="chapter-button noselect" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
+      <div 
+        class="chapter-button noselect" 
+        id="left-chapter-button"
+        @click="previousChapter()">
+        <i class="material-icons">arrow_back</i>
+      </div>
       <main-content
         :view="view"
         :bible="bible"
         :verse="verse">
       </main-content>
-      <div class="chapter-button noselect" id="right-chapter-button"><i class="material-icons">arrow_forward</i></div>
+      <div 
+        class="chapter-button noselect" 
+        id="right-chapter-button"
+        @click="nextChapter()">
+        <i class="material-icons">arrow_forward</i>
+      </div>
     </div>
   </main>
 </template>
@@ -40,6 +50,14 @@ export default {
     // Change View
     changeView: function(view){
       this.$emit('changeView', view);
+    },
+
+    previousChapter: function() {
+      this.$emit('previousChapter');
+    },
+
+    nextChapter: function() {
+      this.$emit('nextChapter');
     }
   }
 
