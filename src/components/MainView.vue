@@ -5,6 +5,9 @@
       :view="view"
       :bible="bible"
       :verse="verse"
+      :book="book"
+      :chapter="chapter"
+      :version="version"
     ></navigation> 
     <div id="container">
       <div class="chapter-button noselect" id="left-chapter-button"><i class="material-icons">arrow_back</i></div>
@@ -31,7 +34,7 @@ export default {
     MainContent
   },
 
-  props: ['view', 'bible', 'verse'],
+  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version'],
 
   methods: {
     // Change View

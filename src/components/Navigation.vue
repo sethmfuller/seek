@@ -2,15 +2,15 @@
   <nav>
     <div id="book-selections">
       <div class="selection">
-        <h2>{{info.bookname}}</h2>
+        <h2>{{book}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
       <div class="selection">
-        <h2>{{info.chapter}}</h2>
+        <h2>{{chapter}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
       <div class="selection">
-        <h2>NLT</h2>
+        <h2>{{version}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
     </div>
@@ -36,7 +36,7 @@
 export default {
 name: 'navigation',
 
-props: ['view', 'bible', 'verse'],
+props: ['view', 'bible', 'verse', 'book', 'chapter', 'version'],
 
 methods: {
   // Change to Verse View
@@ -44,27 +44,6 @@ methods: {
     this.$emit('changeView', view);
   }
 },
-
-computed: {
-
-  info: function() {
-    if (this.view == "verse") {
-      console.log(verse.reference);
-     var arrayOfStrings = this.verse.reference.split(' ');
-     return {
-       bookname: arrayOfStrings[0],
-       chapter: arrayOfStrings[1]
-     }
-    }
-    else {
-      var arrayOfStrings = this.bible.reference.split(' ');
-      return {
-        bookname: arrayOfStrings[0],
-        chapter: arrayOfStrings[1]
-     }
-    }
-  }
-}
 
 }
 </script>

@@ -5,7 +5,10 @@
       @changeView="changeView"
       :view="view"
       :bible="bible"
-      :verse="verse">
+      :verse="verse"
+      :book="book"
+      :chapter="chapter"
+      :version="version">
     </main-view>
   </div>
 </template>
@@ -26,7 +29,10 @@ data() {
   return {
     view: 'bible',
     bible: '',
-    verse: ''
+    verse: '',
+    book: '',
+    chapter: '',
+    version: ''
   }
 },
 
@@ -36,12 +42,23 @@ methods: {
   changeView: function(info) 
   {
     this.view = info;
+    if (info != 'search') {
+      this.book = (info == "verse") ? this.verse.reference.split(' ')[0] : this.bible.reference.split(' ')[0];
+      this.chapter = (info == "verse") ? this.verse.verses[0].chapter : this.bible.reference.split(' ')[1];
+      this.version = (info == "verse") ? this.verse.translation_id.toUpperCase() : this.bible.translation_id.toUpperCase();
+    }
+    
   }
 },
 
 created: function() {
-  fetchData('genesis 1').then(data => this.bible = data);
-  fetchData('matthew 1:2').then(data => this.verse = data);
+  fetchData('genesis 1').then(data => {
+    this.bible = data;
+    this.book = data.reference.split(' ')[0];
+    this.chapter = data.reference.split(' ')[1];
+    this.version = data.translation_id.toUpperCase();
+  });
+  fetchData('matthew 12:2').then(data => this.verse = data);
 }
 }
 </script>
