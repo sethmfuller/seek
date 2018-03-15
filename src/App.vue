@@ -55,7 +55,8 @@ methods: {
   },
 
   previousChapter: function() {
-    fetchData(`${this.computedPreviousChapter.name} ${this.computedPreviousChapter.number}`).then(data => {
+    var computed = this.computedPreviousChapter();
+    fetchData(`${computed.name} ${computed.number}`).then(data => {
       this.bible = data;
       this.book = data.reference.split(' ')[0];
       this.chapter = data.reference.split(' ')[1];
@@ -64,17 +65,19 @@ methods: {
   },
 
   nextChapter: function() {
-
+    var computed = this.computedNextChapter();
+    fetchData(`${computed.name} ${computed.number}`).then(data => {
+      this.bible = data;
+      this.book = data.reference.split(' ')[0];
+      this.chapter = data.reference.split(' ')[1];
+      this.version = data.translation_id.toUpperCase();
+    });
   },
-},
 
-computed: {
   computedPreviousChapter: function() {
     if (this.chapterid == 1) {
       this.bookid = (this.bookid == 1) ? 66 : this.bookid - 1;
       this.chapterid = chapters[this.bookid - 1].length;
-      console.log(this.bookid);
-      console.log(this.chapterid);
       return {
         name: books[this.bookid-1],
         number: this.chapterid
@@ -82,13 +85,27 @@ computed: {
     }
     else {
       this.chapterid--;
-      console.log(chapters[this.bookid].length - 1);
-      console.log("here");
-      console.log(this.bookid);
-      console.log(this.chapterid);
       return {
         name: books[this.bookid-1],
         number:this.chapterid
+      }
+    }
+  },
+
+  computedNextChapter: function() {
+    if (this.chapterid == chapters[this.bookid-1].length) {
+      this.bookid = (this.bookid == 66) ? 1 : this.bookid + 1;
+      this.chapterid = 1;
+      return {
+        name: books[this.bookid-1],
+        number: this.chapterid
+      }
+    }
+    else {
+      this.chapterid++;
+      return {
+        name: books[this.bookid-1],
+        number: this.chapterid
       }
     }
   }
