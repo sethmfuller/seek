@@ -5,12 +5,15 @@
       @changeView="changeView"
       @previousChapter="previousChapter"
       @nextChapter="nextChapter"
+      @referenceClick="referenceClick"
       :view="view"
       :bible="bible"
       :verse="verse"
       :book="book"
       :chapter="chapter"
-      :version="version">
+      :version="version"
+      :dropdown="dropdown"
+      :dropdownDataType="dropdownDataType">
     </main-view>
   </div>
 </template>
@@ -37,7 +40,9 @@ data() {
     chapter: '',
     version: '',
     bookid: '',
-    chapterid: ''
+    chapterid: '',
+    dropdown: false,
+    dropdownDataType: ''
   }
 },
 
@@ -108,6 +113,11 @@ methods: {
         number: this.chapterid
       }
     }
+  },
+
+  referenceClick: function(clickType){
+    this.dropdown = true;
+    this.dropdownDataType = clickType;
   }
 },
 

@@ -2,6 +2,7 @@
   <main>
     <navigation 
       @changeView="changeView"
+      @referenceClick="referenceClick"
       :view="view"
       :bible="bible"
       :verse="verse"
@@ -9,6 +10,10 @@
       :chapter="chapter"
       :version="version"
     ></navigation> 
+    <drop-down
+      v-if="dropdown == true"
+      :dropdownDataType="dropdownDataType">
+    </drop-down>
     <div id="container">
       <div 
         class="chapter-button noselect" 
@@ -34,6 +39,7 @@
 <script>
 import Navigation from './Navigation.vue'
 import MainContent from './MainContent.vue'
+import DropDown from './DropDown.vue'
 
 export default {
 
@@ -41,10 +47,11 @@ export default {
 
   components: {
     Navigation,
-    MainContent
+    MainContent,
+    DropDown
   },
 
-  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version'],
+  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version', 'dropdown', 'dropdownDataType'],
 
   methods: {
     // Change View
@@ -58,6 +65,10 @@ export default {
 
     nextChapter: function() {
       this.$emit('nextChapter');
+    },
+
+    referenceClick: function(clickType) {
+      this.$emit('referenceClick', clickType);
     }
   }
 

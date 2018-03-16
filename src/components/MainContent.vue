@@ -20,7 +20,6 @@
 import Bible from './Bible.vue'
 import Verse from './VerseOfDay.vue'
 import Search from './Search.vue'
-import DropDown from './DropDown.vue'
 
 export default {
 name: 'main-content',
@@ -29,7 +28,6 @@ components: {
   Bible,
   Verse,
   Search,
-  DropDown
 },
 
 props: ['view', 'bible', 'verse'],

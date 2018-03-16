@@ -30,12 +30,16 @@ computed: {
     flex-direction: column;
     text-align: start;
     overflow-y: scroll;
+    font-family: "Palatino Linotype";
+    font-size: 18px;
 }
 
 h3 
 {
     text-align: center;
     font-size: 30px;
+    font-family: 'Roboto';
+    font-weight: normal;
 }
 
 </style>

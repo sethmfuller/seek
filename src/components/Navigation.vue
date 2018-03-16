@@ -1,7 +1,8 @@
 <template>
   <nav>
     <div id="book-selections">
-      <div class="selection">
+      <div class="selection"
+        @click="referenceClick('book')">
         <h2>{{book}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
@@ -40,8 +41,12 @@ props: ['view', 'bible', 'verse', 'book', 'chapter', 'version'],
 
 methods: {
   // Change to Verse View
-  changeView: function(view){
+  changeView: function(view) {
     this.$emit('changeView', view);
+  },
+
+  referenceClick: function(clickType) {
+    this.$emit('referenceClick', clickType);
   }
 },
 
