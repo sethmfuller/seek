@@ -3,6 +3,7 @@
     <navigation 
       @changeView="changeView"
       @referenceClick="referenceClick"
+      @chooseVersion="chooseVersion"
       :view="view"
       :bible="bible"
       :verse="verse"
@@ -12,7 +13,11 @@
     ></navigation> 
     <drop-down
       v-if="dropdown == true"
-      :dropdownDataType="dropdownDataType">
+      @chooseBook="chooseBook"
+      @chooseSpecificChapter="chooseSpecificChapter"
+      @chooseVersion="chooseVersion"
+      :dropdownDataType="dropdownDataType"
+      :bookid="bookid">
     </drop-down>
     <div id="container">
       <div 
@@ -22,6 +27,7 @@
         <i class="material-icons">arrow_back</i>
       </div>
       <main-content
+        @closeDropdown="closeDropdown"
         :view="view"
         :bible="bible"
         :verse="verse">
@@ -51,7 +57,7 @@ export default {
     DropDown
   },
 
-  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version', 'dropdown', 'dropdownDataType'],
+  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version', 'dropdown', 'dropdownDataType', 'bookid'],
 
   methods: {
     // Change View
@@ -69,6 +75,22 @@ export default {
 
     referenceClick: function(clickType) {
       this.$emit('referenceClick', clickType);
+    },
+
+    closeDropdown: function() {
+      this.$emit('closeDropdown');
+    },
+    
+    chooseBook: function(book){
+      this.$emit('chooseBook', book);
+    },
+
+    chooseSpecificChapter: function(bc_combo){
+      this.$emit('chooseSpecificChapter', bc_combo);
+    },
+    
+    chooseVersion: function(version) {
+            this.$emit('chooseVersion', version);
     }
   }
 

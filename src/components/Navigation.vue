@@ -1,16 +1,23 @@
 <template>
   <nav>
     <div id="book-selections">
-      <div class="selection"
+      <div 
+        class="selection"
         @click="referenceClick('book')">
         <h2>{{book}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
-      <div class="selection">
+
+      <div 
+        class="selection"
+        @click="referenceClick('chapter')">
         <h2>{{chapter}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
-      <div class="selection">
+
+      <div 
+        class="selection"
+        @click="referenceClick('version')">
         <h2>{{version}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
@@ -60,6 +67,7 @@ nav
     height: 60px;
     background-color: #673AB8;
     box-shadow: 0 0 5px rgba(0,0,0,.5);
+    z-index: 100;
     display: flex;
     align-items: center;
     border-top-left-radius: 2px;

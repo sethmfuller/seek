@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="closeDropdown">
       <bible 
         v-if="this.view=='bible'"
         :bible="bible">
@@ -32,7 +32,10 @@ components: {
 
 props: ['view', 'bible', 'verse'],
 
-computed: {
+methods: {
+  closeDropdown: function() {
+    this.$emit('closeDropdown');
+  }
 }
 
 }

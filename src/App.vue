@@ -6,6 +6,10 @@
       @previousChapter="previousChapter"
       @nextChapter="nextChapter"
       @referenceClick="referenceClick"
+      @closeDropdown="closeDropdown"
+      @chooseBook="chooseBook"
+      @chooseSpecificChapter="chooseSpecificChapter"
+      @chooseVersion="chooseVersion"
       :view="view"
       :bible="bible"
       :verse="verse"
@@ -13,7 +17,8 @@
       :chapter="chapter"
       :version="version"
       :dropdown="dropdown"
-      :dropdownDataType="dropdownDataType">
+      :dropdownDataType="dropdownDataType"
+      :bookid="bookid">
     </main-view>
   </div>
 </template>
@@ -21,7 +26,7 @@
 <script>
 import MainView from './components/MainView.vue'
 import {fetchData} from './api/api_calls.js'
-import {chapters, books} from './assets/Bible.js'
+import {chapters, books, allBooks} from './assets/Bible.js'
 
 export default {
 
@@ -59,12 +64,22 @@ methods: {
     }
   },
 
+  specificChapter: function(book, chapter) {
+    fetchData(`${book} ${chapter}`).then(data => {
+      this.bible = data;
+      this.book = data.reference.split(' ')[0];
+      this.chapter = data.reference.split(' ')[1];
+      this.version = data.translation_id.toUpperCase();
+    });
+  },
+
   previousChapter: function() {
     var computed = this.computedPreviousChapter();
     fetchData(`${computed.name} ${computed.number}`).then(data => {
       this.bible = data;
       this.book = data.reference.split(' ')[0];
       this.chapter = data.reference.split(' ')[1];
+      this.chapterid = computed.number;
       this.version = data.translation_id.toUpperCase();
     });
   },
@@ -75,6 +90,7 @@ methods: {
       this.bible = data;
       this.book = data.reference.split(' ')[0];
       this.chapter = data.reference.split(' ')[1];
+      this.chapterid = computed.number;
       this.version = data.translation_id.toUpperCase();
     });
   },
@@ -118,6 +134,60 @@ methods: {
   referenceClick: function(clickType){
     this.dropdown = true;
     this.dropdownDataType = clickType;
+    document.getElementById("text").style.opacity = 0.1;
+    document.getElementById("text").style.overflowY = "hidden";
+  },
+
+  closeDropdown: function() {
+    this.dropdown = false;
+    document.getElementById("text").style.opacity = 1;
+    document.getElementById("text").style.overflowY = "scroll";
+  },
+
+  chooseBook: function(book) {
+    fetchData(`${book} ${1}?translation=${this.version}`).then(data => {
+      this.bible = data;
+      this.bookid = allBooks.indexOf(book);
+      this.book = data.reference.split(' ')[0];
+      this.chapter = data.reference.split(' ')[1];
+      this.chapterid = 1;
+      this.version = data.translation_id.toUpperCase();
+      this.dropdown = false;
+      document.getElementById("text").style.opacity = 1;
+      document.getElementById("text").style.overflowY = "scroll";
+    });
+  },
+
+  chooseSpecificChapter: function(bc_combo) {
+    if (bc_combo.book == "") {
+      this.chapter = bc_combo.chapter;
+      this.chapterid = bc_combo.chapter;
+      console.log(this.chapterid);
+      fetchData(`${this.book} ${this.chapter}`).then(data => {
+        this.bible = data;
+        this.book = data.reference.split(' ')[0];
+        this.bookid = allBooks.indexOf(this.book);
+        this.chapter = data.reference.split(' ')[1];
+        this.chapterid = bc_combo.chapter;
+        console.log(this.chapterid);
+        this.version = data.translation_id.toUpperCase();
+        this.dropdown = false;
+        document.getElementById("text").style.opacity = 1;
+        document.getElementById("text").style.overflowY = "scroll";
+      });
+    }
+  },
+
+  chooseVersion: function(version) {
+    fetchData(`${this.book} ${this.chapter}?translation=${version}`).then(data => {
+      this.bible = data;
+      this.book = data.reference.split(' ')[0];
+      this.chapter = data.reference.split(' ')[1];
+      this.version = data.translation_id.toUpperCase();
+      this.dropdown = false;
+      document.getElementById("text").style.opacity = 1;
+      document.getElementById("text").style.overflowY = "scroll";
+    });
   }
 },
 

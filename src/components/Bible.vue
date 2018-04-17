@@ -29,7 +29,7 @@ computed: {
     display: flex;
     flex-direction: column;
     text-align: start;
-    overflow-y: scroll;
+    overflow-y:scroll;
     font-family: "Palatino Linotype";
     font-size: 18px;
 }
