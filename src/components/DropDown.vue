@@ -1,13 +1,17 @@
 <template>
 <div id="dropdown">
+
+    <!-- Dropdown for Books of the Bible -->
     <div id="books" v-if="dropdownDataType == 'book'">
         <!-- Sub Heading -->
         <h2 class="testament">Old Testament</h2><div></div>
         <div class="box-containers">
-        <div class="button"
-            v-for='box in oldTestament'
-            @click="chooseBook(box)">
-            {{box}}
+        <div 
+            class="button"
+            v-for='(book, index) in oldTestament'
+            :key="index"
+            @click="chooseBook(book)">
+            {{book}}
         </div>
         </div>
         
@@ -18,28 +22,30 @@
             class="box-containers">
             <div 
                 class="button"
-                v-for='book in newTestament'
-                v-bind:key="book"
+                v-for='(book, index) in newTestament'
+                v-bind:key="index"
                 @click="chooseBook(book)">
                 {{book}}
             </div>
         </div>
     </div>
 
+    <!-- Dropdown for chapters in a book -->
     <div id="books" v-if="dropdownDataType == 'chapter'">
         <h2 class="testament">Chapter</h2><div></div>
         <div 
             class="box-containers">
             <div 
                 class="button"
-                v-for='chapter in chapters'
-                v-bind:key = "chapter"
+                v-for='(chapter, index) in chapters'
+                v-bind:key = "index"
                 @click="chooseSpecificChapter('', chapter)">
                 {{chapter}}
             </div>
         </div>
     </div>
 
+    <!-- Dropdown for versions of the Bible -->
     <div id="books" v-if="dropdownDataType == 'version'">
         <h2 class="testament">Version</h2><div></div>
         <div 

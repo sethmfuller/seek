@@ -89,6 +89,7 @@ methods: {
     fetchData(`${computed.name} ${computed.number}`).then(data => {
       this.bible = data;
       this.book = data.reference.split(' ')[0];
+      this.bookid = parseInt(data.reference.split(' ')[0]);
       this.chapter = data.reference.split(' ')[1];
       this.chapterid = computed.number;
       this.version = data.translation_id.toUpperCase();
