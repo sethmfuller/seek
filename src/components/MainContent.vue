@@ -5,11 +5,6 @@
         :bible="bible">
       </bible>
 
-      <verse
-        v-if="this.view=='verse'"
-        :verse="verse">
-      </verse>
-
       <search
         v-if="this.view=='search'">
       </search>
@@ -18,7 +13,6 @@
 
 <script>
 import Bible from './Bible.vue'
-import Verse from './VerseOfDay.vue'
 import Search from './Search.vue'
 
 export default {
@@ -26,7 +20,6 @@ name: 'main-content',
 
 components: {
   Bible,
-  Verse,
   Search,
 },
 

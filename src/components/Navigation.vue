@@ -30,10 +30,6 @@
         >book</i>
         <i 
           class="material-icons site-navs noselect"
-          @click="changeView('verse')"
-        >today</i>
-        <i 
-          class="material-icons site-navs noselect"
           @click="changeView('search')"
         >search</i>
     </div>
