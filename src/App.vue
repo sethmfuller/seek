@@ -12,7 +12,6 @@
       @chooseVersion="chooseVersion"
       :view="view"
       :bible="bible"
-      :verse="verse"
       :book="book"
       :chapter="chapter"
       :version="version"
@@ -40,7 +39,6 @@ data() {
   return {
     view: 'bible',
     bible: '',
-    verse: '',
     book: '',
     chapter: '',
     version: '',
@@ -56,12 +54,6 @@ methods: {
   // Make api call
   changeView: function(info) 
   {
-    this.view = info;
-    if (info != 'search') {
-      this.book = (info == "verse") ? this.verse.reference.split(' ')[0] : this.bible.reference.split(' ')[0];
-      this.chapter = (info == "verse") ? this.verse.verses[0].chapter : this.bible.reference.split(' ')[1];
-      this.version = (info == "verse") ? this.verse.translation_id.toUpperCase() : this.bible.translation_id.toUpperCase();
-    }
   },
 
   specificChapter: function(book, chapter) {
@@ -74,118 +66,44 @@ methods: {
   },
 
   previousChapter: function() {
-    var computed = this.computedPreviousChapter();
-    fetchData(`${computed.name} ${computed.number}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.chapterid = computed.number;
-      this.version = data.translation_id.toUpperCase();
-    });
+    
   },
 
   nextChapter: function() {
-    var computed = this.computedNextChapter();
-    fetchData(`${computed.name} ${computed.number}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.bookid = parseInt(data.reference.split(' ')[0]);
-      this.chapter = data.reference.split(' ')[1];
-      this.chapterid = computed.number;
-      this.version = data.translation_id.toUpperCase();
-    });
-  },
-
-  computedPreviousChapter: function() {
-    if (this.chapterid == 1) {
-      this.bookid = (this.bookid == 1) ? 66 : this.bookid - 1;
-      this.chapterid = chapters[this.bookid - 1].length;
-      return {
-        name: books[this.bookid-1],
-        number: this.chapterid
-      }
-    }
-    else {
-      this.chapterid--;
-      return {
-        name: books[this.bookid-1],
-        number:this.chapterid
-      }
-    }
-  },
-
-  computedNextChapter: function() {
-    if (this.chapterid == chapters[this.bookid-1].length) {
-      this.bookid = (this.bookid == 66) ? 1 : this.bookid + 1;
-      this.chapterid = 1;
-      return {
-        name: books[this.bookid-1],
-        number: this.chapterid
-      }
-    }
-    else {
-      this.chapterid++;
-      return {
-        name: books[this.bookid-1],
-        number: this.chapterid
-      }
-    }
+    
   },
 
   referenceClick: function(clickType){
-    this.dropdown = true;
-    this.dropdownDataType = clickType;
+    
     document.getElementById("text").style.opacity = 0.1;
     document.getElementById("text").style.overflowY = "hidden";
   },
 
   closeDropdown: function() {
-    this.dropdown = false;
+    
     document.getElementById("text").style.opacity = 1;
     document.getElementById("text").style.overflowY = "scroll";
   },
 
   chooseBook: function(book) {
     fetchData(`${book} ${1}?translation=${this.version}`).then(data => {
-      this.bible = data;
-      this.bookid = allBooks.indexOf(book);
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.chapterid = 1;
-      this.version = data.translation_id.toUpperCase();
-      this.dropdown = false;
+      
       document.getElementById("text").style.opacity = 1;
       document.getElementById("text").style.overflowY = "scroll";
     });
   },
 
   chooseSpecificChapter: function(bc_combo) {
-    if (bc_combo.book == "") {
-      this.chapter = bc_combo.chapter;
-      this.chapterid = bc_combo.chapter;
-      console.log(this.chapterid);
       fetchData(`${this.book} ${this.chapter}`).then(data => {
-        this.bible = data;
-        this.book = data.reference.split(' ')[0];
-        this.bookid = allBooks.indexOf(this.book);
-        this.chapter = data.reference.split(' ')[1];
-        this.chapterid = bc_combo.chapter;
-        console.log(this.chapterid);
-        this.version = data.translation_id.toUpperCase();
-        this.dropdown = false;
+        
         document.getElementById("text").style.opacity = 1;
         document.getElementById("text").style.overflowY = "scroll";
       });
-    }
   },
 
   chooseVersion: function(version) {
     fetchData(`${this.book} ${this.chapter}?translation=${version}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.version = data.translation_id.toUpperCase();
-      this.dropdown = false;
+      
       document.getElementById("text").style.opacity = 1;
       document.getElementById("text").style.overflowY = "scroll";
     });
@@ -194,15 +112,10 @@ methods: {
 
 created: function() {
   fetchData('genesis 1').then(data => {
-    this.bible = data;
-    this.book = data.reference.split(' ')[0];
-    this.chapter = data.reference.split(' ')[1];
-    this.version = data.translation_id.toUpperCase();
-    this.bookid = 1;
-    this.chapterid = 1;
+    
   });
-  fetchData('matthew 12:2').then(data => this.verse = data);
 }
+
 }
 </script>
 

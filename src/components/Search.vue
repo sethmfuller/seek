@@ -4,7 +4,7 @@
         <input type="search" placeholder="Search">
         <h3>Results</h3>
         <ul>
-            <li>cool coolcool cool cool cool cool coolalksdjf ;laksdjf ;alsdkfj a;ldskfj a;sldfj a;lsdkfj a;slf a;lsdkfj  </li>
+            <li>cool coolcool cool cool cool cool</li>
             <li>cool</li>
             <li>cool</li>
             <li>cool</li>
