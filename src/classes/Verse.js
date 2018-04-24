@@ -33,3 +33,5 @@ class Verse
         return this.text_;
     }
 }
+
+export { Verse }

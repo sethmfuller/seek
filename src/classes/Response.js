@@ -1,4 +1,3 @@
-import { version } from "punycode";
 import { Verse } from './Verse.js';
 
 class Response
@@ -15,7 +14,7 @@ class Response
             this.book_name_ = split_book_name[0] + " " + split_book_name[1];
             this.chapter_number_ = split_book_name[2];
         }
-        else 
+        else
         {
             this.book_name_ = split_book_name[0];
             this.chapter_number_ = split_book_name[1];
@@ -58,3 +57,5 @@ class Response
     }
 
 }
+
+export { Response }

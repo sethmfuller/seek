@@ -1,41 +1,35 @@
 <template>
   <main>
-    <navigation 
-      @changeView="changeView"
-      @referenceClick="referenceClick"
-      @chooseVersion="chooseVersion"
-      :view="view"
-      :bible="bible"
-      :verse="verse"
-      :book="book"
-      :chapter="chapter"
-      :version="version"
-    ></navigation> 
+
+    <!-- Navigation Bar -->
+    <navigation
+      :response="response">
+    </navigation> 
+
+    <!-- Dropdown Menu -->
     <drop-down
-      v-if="dropdown == true"
-      @chooseBook="chooseBook"
-      @chooseSpecificChapter="chooseSpecificChapter"
-      @chooseVersion="chooseVersion"
-      :dropdownDataType="dropdownDataType"
-      :bookid="bookid">
+      :response="response">
     </drop-down>
+
+    <!-- Main Content -->
     <div id="container">
+
+      <!-- Previous Chapter Button -->
       <div 
         class="chapter-button noselect" 
-        id="left-chapter-button"
-        @click="previousChapter()">
+        id="left-chapter-button">
         <i class="material-icons">arrow_back</i>
       </div>
+
+      <!-- Main Content -->
       <main-content
-        @closeDropdown="closeDropdown"
-        :view="view"
-        :bible="bible"
-        :verse="verse">
+        :response="response">
       </main-content>
+
+      <!-- Next Chapter Button -->
       <div 
         class="chapter-button noselect" 
-        id="right-chapter-button"
-        @click="nextChapter()">
+        id="right-chapter-button">
         <i class="material-icons">arrow_forward</i>
       </div>
     </div>
@@ -57,42 +51,11 @@ export default {
     DropDown
   },
 
-  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version', 'dropdown', 'dropdownDataType', 'bookid'],
+  props: ['response'],
 
   methods: {
-    // Change View
-    changeView: function(view){
-      this.$emit('changeView', view);
-    },
 
-    previousChapter: function() {
-      this.$emit('previousChapter');
-    },
-
-    nextChapter: function() {
-      this.$emit('nextChapter');
-    },
-
-    referenceClick: function(clickType) {
-      this.$emit('referenceClick', clickType);
-    },
-
-    closeDropdown: function() {
-      this.$emit('closeDropdown');
-    },
-    
-    chooseBook: function(book){
-      this.$emit('chooseBook', book);
-    },
-
-    chooseSpecificChapter: function(bc_combo){
-      this.$emit('chooseSpecificChapter', bc_combo);
-    },
-    
-    chooseVersion: function(version) {
-            this.$emit('chooseVersion', version);
-    }
-  }
+  },
 
 }
 </script>

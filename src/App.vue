@@ -2,30 +2,15 @@
   <div id="app">
     <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
     <main-view
-      @changeView="changeView"
-      @previousChapter="previousChapter"
-      @nextChapter="nextChapter"
-      @referenceClick="referenceClick"
-      @closeDropdown="closeDropdown"
-      @chooseBook="chooseBook"
-      @chooseSpecificChapter="chooseSpecificChapter"
-      @chooseVersion="chooseVersion"
-      :view="view"
-      :bible="bible"
-      :book="book"
-      :chapter="chapter"
-      :version="version"
-      :dropdown="dropdown"
-      :dropdownDataType="dropdownDataType"
-      :bookid="bookid">
+      :response="response">
     </main-view>
   </div>
 </template>
 
 <script>
 import MainView from './components/MainView.vue'
-import {fetchData} from './api/api_calls.js'
 import {chapters, books, allBooks} from './assets/Bible.js'
+import { Request } from './classes/Request.js'
 
 export default {
 
@@ -38,83 +23,20 @@ components: {
 data() {
   return {
     view: 'bible',
-    bible: '',
-    book: '',
-    chapter: '',
-    version: '',
-    bookid: '',
-    chapterid: '',
     dropdown: false,
-    dropdownDataType: ''
-  }
-},
 
-methods: {
-
-  // Make api call
-  changeView: function(info) 
-  {
-  },
-
-  specificChapter: function(book, chapter) {
-    fetchData(`${book} ${chapter}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.version = data.translation_id.toUpperCase();
-    });
-  },
-
-  previousChapter: function() {
-    
-  },
-
-  nextChapter: function() {
-    
-  },
-
-  referenceClick: function(clickType){
-    
-    document.getElementById("text").style.opacity = 0.1;
-    document.getElementById("text").style.overflowY = "hidden";
-  },
-
-  closeDropdown: function() {
-    
-    document.getElementById("text").style.opacity = 1;
-    document.getElementById("text").style.overflowY = "scroll";
-  },
-
-  chooseBook: function(book) {
-    fetchData(`${book} ${1}?translation=${this.version}`).then(data => {
-      
-      document.getElementById("text").style.opacity = 1;
-      document.getElementById("text").style.overflowY = "scroll";
-    });
-  },
-
-  chooseSpecificChapter: function(bc_combo) {
-      fetchData(`${this.book} ${this.chapter}`).then(data => {
-        
-        document.getElementById("text").style.opacity = 1;
-        document.getElementById("text").style.overflowY = "scroll";
-      });
-  },
-
-  chooseVersion: function(version) {
-    fetchData(`${this.book} ${this.chapter}?translation=${version}`).then(data => {
-      
-      document.getElementById("text").style.opacity = 1;
-      document.getElementById("text").style.overflowY = "scroll";
-    });
+    response: null,
   }
 },
 
 created: function() {
-  fetchData('genesis 1').then(data => {
-    
-  });
-}
+  this.response = new Request('Genesis', 1, 'web');
+},
+
+methods: {
+
+  
+},
 
 }
 </script>
