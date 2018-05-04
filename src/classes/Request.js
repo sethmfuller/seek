@@ -22,7 +22,7 @@ class Request
         this.current_translation_ = translation;
 
         return fetchData(`${book} ${chapter}?translation=${translation}`).then(response => {
-            return new Response(response);
+            return new Response(response, this.current_book_id_);
         });
     }
 
@@ -50,7 +50,7 @@ class Request
         }
 
         return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
-            return new Response(response);
+            return new Response(response, this.current_book_id_);
         });
     }
 
@@ -77,7 +77,7 @@ class Request
             this.current_chapter_--;
         }
         return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
-            return new Response(response);
+            return new Response(response, this.current_book_id_);
         });
     }
 
@@ -89,7 +89,7 @@ class Request
         this.current_chapter_ = 1;
 
         return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
-            return new Response(response);
+            return new Response(response, this.current_book_id_);
         });
     }
 
@@ -99,7 +99,7 @@ class Request
         this.current_chapter_ = chapter;
 
         return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
-            return new Response(response);
+            return new Response(response, this.current_book_id_);
         });
     }
 
@@ -109,10 +109,9 @@ class Request
         this.current_translation_ = version;
 
         return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
-            return new Response(response);
+            return new Response(response, this.current_book_id_);
         });
     }
-
 }
 
 export { Request }

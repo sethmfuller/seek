@@ -3,7 +3,7 @@ import { Verse } from './Verse.js';
 class Response
 {
     // Default Constructor
-    constructor (response)
+    constructor (response, bookID)
     {
 
         // Set member variables
@@ -29,8 +29,9 @@ class Response
 
             var verse_object = new Verse(verse);
             this.verse_array_.push(verse_object);
-
         });
+
+        this.book_id_ = bookID;
     }
 
     // Get Book Name
@@ -55,6 +56,12 @@ class Response
     get_translation_name ()
     {
         return this.translation_name_;
+    }
+
+    // Get Book ID
+    get_book_id ()
+    {
+        return this.book_id_;
     }
 
 }

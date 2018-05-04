@@ -1,8 +1,8 @@
 <template>
-    <div id="text">
+    <div class="text" id="bible-id">
         <h3>{{response_.get_book_name()}} {{response_.get_chapter_number()}}</h3>
-        <p id="text">
-            <span 
+        <p class="text" id="chapter-text">
+            <span
                 v-for="(verse, index) in response_.get_verse_array()"
                 :key="index">
                 <sup>{{verse.get_verse_number()}}</sup>
@@ -23,7 +23,7 @@ props: ['response_'],
 </script>
 
 <style>
-#text
+.text
 {
     height: 100%;
     width: 100%;

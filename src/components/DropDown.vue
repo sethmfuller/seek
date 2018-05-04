@@ -24,7 +24,7 @@
                 class="button"
                 v-for='(book, index) in this.newTestament'
                 :key="index"
-                @click="chooseBook(index)">
+                @click="chooseBook(index+39)">
                 {{book}}
             </div>
         </div>
@@ -37,8 +37,8 @@
             class="box-containers">
             <div
                 class="button"
-                v-for='index = 1; index <= ; index++'
-                :key = "index"
+                v-for='index in bookNumbers[response_.get_book_id()]'
+                v-bind:key = "index"
                 @click="chooseChapter(index)">
                 {{index}}
             </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { abrevOldTestament, abrevNewTestament, versions, current_book_id} from '../assets/Bible.js'
+import { abrevOldTestament, abrevNewTestament, versions, book_nums} from '../assets/Bible.js'
 export default {
     name: 'drop-down',
 
@@ -84,12 +84,16 @@ export default {
         },
 
         newTestament: function() {
-            return abrevOldTestament;
+            return abrevNewTestament;
         },
 
         bibleVersions: function() {
             return versions;
-        }
+        },
+
+        bookNumbers: function() {
+            return book_nums;
+        },
     },
 
     methods: {
@@ -114,12 +118,13 @@ export default {
 <style>
 #dropdown
 {
-    width: 100%;
+    display: flex;
+    width: inherit;
     height: 180px;
     background-color: white;
     overflow-y: scroll;
     box-shadow: 0.0001px 5px 0.5pc rgba(0, 0, 0, 0.25);
-    position: static;
+    position: relative;
     z-index: 1;
 }
 

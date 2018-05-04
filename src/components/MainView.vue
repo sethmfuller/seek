@@ -20,7 +20,10 @@
     </drop-down>
 
     <!-- Main Content -->
-    <div id="container">
+    <div 
+      id="container"
+      @click="closeDropdown()"
+    >
 
       <!-- Previous Chapter Button -->
       <div 
@@ -102,6 +105,11 @@ export default {
     chooseVersion: function(version)
     {
       this.$emit('chooseVersion', version);
+    },
+
+    closeDropdown: function()
+    {
+      this.$emit('closeDropdown');
     }
   },
 

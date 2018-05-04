@@ -18,7 +18,8 @@
       @versionSelect="versionSelect"
       @chooseBook="chooseBook"
       @chooseChapter="chooseChapter"
-      @chooseVersion="chooseVersion">
+      @chooseVersion="chooseVersion"
+      @closeDropdown="closeDropdown">
     </main-view>
     
   </div>
@@ -91,14 +92,23 @@ methods: {
 
   bookSelect: function() {
     this.dropdown_ = 'book';
+
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 0.2;
   },
 
   chapterSelect: function() {
     this.dropdown_ = 'chapter';
+
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 0.2;
   },
 
   versionSelect: function() {
     this.dropdown_ = 'version';
+
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 0.2;
   },
 
   chooseBook: function(book) {
@@ -114,6 +124,8 @@ methods: {
       this.spinner_= false;
       this.search_ = false;
       this.bible_ = true;
+
+      
     });
   },
 
@@ -148,6 +160,12 @@ methods: {
       this.bible_ = true;
     });
   },
+
+  closeDropdown: function(){
+    this.dropdown_ = '';
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 1;
+  }
 },
 
 }

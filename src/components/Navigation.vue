@@ -4,7 +4,7 @@
       <div
         @click="bookSelect()"
         class="selection">
-        <h2>{{this.response_.get_book_name()}}</h2>
+        <h2>{{response_.get_book_name()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
 
@@ -26,10 +26,7 @@
     <div id="site-navigation">
         <i
           class="material-icons site-navs noselect"
-        >book</i>
-        <i 
-          class="material-icons site-navs noselect"
-        >search</i>
+        >bookmark</i>
     </div>
   </nav>
 </template>
@@ -83,7 +80,6 @@ nav
 {
   font-size: 30px;
   margin-left: 10px;
-  cursor: pointer;
 }
 
 h2
