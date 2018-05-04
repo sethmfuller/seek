@@ -17,8 +17,9 @@
       <!-- Previous Chapter Button -->
       <div 
         class="chapter-button noselect" 
-        id="left-chapter-button">
-        <i class="material-icons">arrow_back</i>
+        id="left-chapter-button"
+        @click="prevChapter()">
+          <i class="material-icons">arrow_back</i>
       </div>
 
       <!-- Main Content -->
@@ -33,6 +34,7 @@
       <div
         class="chapter-button noselect"
         id="right-chapter-button"
+        @click="nextChapter()"
       >
         <i class="material-icons">arrow_forward</i>
       </div>
@@ -58,7 +60,14 @@ export default {
   props: ['response_', 'bible_', 'spinner_', 'search_'],
 
   methods: {
+    
+    nextChapter: function() {
+      this.$emit('nextChapter');
+    },
 
+    prevChapter: function() {
+      this.$emit('prevChapter');
+    }
   },
 
 }

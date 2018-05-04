@@ -9,7 +9,9 @@
       :response_="response_"
       :bible_="bible_"
       :spinner_="spinner_"
-      :search_="search_">
+      :search_="search_"
+      @nextChapter=nextChapter
+      @prevChapter=prevChapter>
     </main-view>
     
   </div>
@@ -17,7 +19,6 @@
 
 <script>
 import MainView from './components/MainView.vue'
-import {chapters, books, allBooks} from './assets/Bible.js'
 import { Request } from './classes/Request.js'
 
 export default {
@@ -44,12 +45,42 @@ created: function(){
   this.request_.initial_request('Genesis', 1, 'web').then(response => {
     this.response_ = response;
     this.spinner_= false;
+    this.search_ = false;
     this.bible_ = true;
   });
 },
 
 methods: {
-  
+  nextChapter: function() {
+
+    // Change View
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+    
+    // Make Request for Next Chapter
+    this.request_.nextChapter().then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
+  },
+
+  prevChapter: function() {
+    // Change View
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+    
+    // Make Request for Next Chapter
+    this.request_.prevChapter().then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
+  },
 },
 
 }
