@@ -16,13 +16,11 @@ class Request
     {
         this.current_book_ = book;
         this.current_chapter_ = chapter;
-        this.current_translation_ = translation;
+        this.current_translation_ = translation; 
 
-        fetchData(`${book} ${chapter}?translation=${translation}`).then(response => {
+        return fetchData(`${book} ${chapter}?translation=${translation}`).then(response => {
             return new Response(response);
         });
-        
-        
     }
 
 }

@@ -5,9 +5,12 @@
     <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
 
     <!-- Main View -->
-    <!-- <main-view
-      :response="response">
-    </main-view> -->
+    <main-view
+      :response_="response_"
+      :bible_="bible_"
+      :spinner_="spinner_"
+      :search_="search_">
+    </main-view>
     
   </div>
 </template>
@@ -27,17 +30,22 @@ components: {
 
 data() {
   return {
-    view: 'bible',
-    dropdown: false,
-    request: null,
-    response: null,
+    bible_: false,
+    spinner_: true,
+    search_: false,
+    dropdown_: false,
+    request_: null,
+    response_: null,
   }
 },
 
-created: function() {
-  this.request = new Request();
-  this.response = this.request.initial_request('Genesis', 1, 'web');
-  console.log(this.response);
+created: function(){
+  this.request_ = new Request();
+  this.request_.initial_request('Genesis', 1, 'web').then(response => {
+    this.response_ = response;
+    this.spinner_= false;
+    this.bible_ = true;
+  });
 },
 
 methods: {

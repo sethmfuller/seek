@@ -2,35 +2,30 @@
   <nav>
     <div id="book-selections">
       <div 
-        class="selection"
-        @click="referenceClick('book')">
-        <h2>{{response.get_book_name()}}</h2>
+        class="selection">
+        <h2>{{this.response_.get_book_name()}}</h2>
+        <i class="material-icons dropdowns noselect">arrow_drop_down</i>
+      </div>
+
+      <div
+        class="selection">
+        <h2>{{this.response_.get_chapter_number()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
 
       <div 
-        class="selection"
-        @click="referenceClick('chapter')">
-        <h2>{{chapter}}</h2>
-        <i class="material-icons dropdowns noselect">arrow_drop_down</i>
-      </div>
-
-      <div 
-        class="selection"
-        @click="referenceClick('version')">
-        <h2>{{version}}</h2>
+        class="selection">
+        <h2>{{this.response_.get_translation_name()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
     </div>
 
     <div id="site-navigation">
-        <i 
+        <i
           class="material-icons site-navs noselect"
-          @click="changeView('bible')"
         >book</i>
         <i 
           class="material-icons site-navs noselect"
-          @click="changeView('search')"
         >search</i>
     </div>
   </nav>
@@ -40,17 +35,10 @@
 export default {
 name: 'navigation',
 
-props: ['response'],
+props: ['response_'],
 
 methods: {
-  // Change to Verse View
-  changeView: function(view) {
-    this.$emit('changeView', view);
-  },
-
-  referenceClick: function(clickType) {
-    this.$emit('referenceClick', clickType);
-  }
+  
 },
 
 }

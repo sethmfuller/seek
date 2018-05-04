@@ -1,7 +1,14 @@
 <template>
     <div id="text">
-        <h3>{{bible.reference}}</h3>
-        {{bible.text}}
+        <h3>{{response_.get_book_name()}} {{response_.get_chapter_number()}}</h3>
+        <p id="text">
+            <span 
+                v-for="(verse, index) in response_.get_verse_array()"
+                v-bind:key="index">
+                <sup>{{verse.get_verse_number()}}</sup>
+                {{verse.get_text()}}
+            </span>
+        </p>
     <br><br>
     </div>
 </template>
@@ -10,11 +17,7 @@
 export default {
 name: 'bible',
 
-props: ['bible'],
-
-computed: {
-    
-}
+props: ['response_'],
 
 }
 </script>
@@ -26,7 +29,6 @@ computed: {
     width: 100%;
     margin: 0px;
     color: #2B313C;
-    display: flex;
     flex-direction: column;
     text-align: start;
     overflow-y:scroll;

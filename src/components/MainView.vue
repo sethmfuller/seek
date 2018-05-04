@@ -3,13 +3,13 @@
 
     <!-- Navigation Bar -->
     <navigation
-      :response="response">
+      :response_="response_">
     </navigation> 
 
     <!-- Dropdown Menu -->
-    <drop-down
-      :response="response">
-    </drop-down>
+    <!-- <drop-down
+      :response_="response_">
+    </drop-down> -->
 
     <!-- Main Content -->
     <div id="container">
@@ -23,7 +23,10 @@
 
       <!-- Main Content -->
       <main-content
-        :response="response">
+        :response_="response_"
+        :bible_="bible_"
+        :spinner_="spinner_"
+        :search_="search_">
       </main-content>
 
       <!-- Next Chapter Button -->
@@ -52,7 +55,7 @@ export default {
     DropDown
   },
 
-  props: ['response'],
+  props: ['response_', 'bible_', 'spinner_', 'search_'],
 
   methods: {
 
