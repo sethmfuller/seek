@@ -1,9 +1,14 @@
 <template>
   <div id="app">
+
+    <!-- Seek.com Logo -->
     <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
-    <main-view
+
+    <!-- Main View -->
+    <!-- <main-view
       :response="response">
-    </main-view>
+    </main-view> -->
+    
   </div>
 </template>
 
@@ -24,17 +29,17 @@ data() {
   return {
     view: 'bible',
     dropdown: false,
-
+    request: null,
     response: null,
   }
 },
 
 created: function() {
-  this.response = new Request('Genesis', 1, 'web');
+  this.request = new Request();
+  this.response = this.request.initial_request('Genesis', 1, 'web');
 },
 
 methods: {
-
   
 },
 

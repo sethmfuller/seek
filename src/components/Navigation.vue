@@ -4,7 +4,7 @@
       <div 
         class="selection"
         @click="referenceClick('book')">
-        <h2>{{book}}</h2>
+        <h2>{{response.get_book_name()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
 
@@ -40,7 +40,7 @@
 export default {
 name: 'navigation',
 
-props: ['view', 'bible', 'verse', 'book', 'chapter', 'version'],
+props: ['response'],
 
 methods: {
   // Change to Verse View

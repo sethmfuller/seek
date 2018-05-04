@@ -4,19 +4,25 @@ import { Response } from './Response.js'
 class Request
 {
     // Default Constructor
-    constructor (book, chapter, translation)
+    constructor ()
     {
-        this.response_;
+        this.current_book_;
+        this.current_chapter_;
+        this.current_translation_;
     }
 
     // Initial Request
-    initial_request ()
+    initial_request (book, chapter, translation)
     {
+        this.current_book_ = book;
+        this.current_chapter_ = chapter;
+        this.current_translation_ = translation;
+
         fetchData(`${book} ${chapter}?translation=${translation}`).then(response => {
-            this.response_ = new Response(response);
+            return new Response(response);
         });
 
-        return this.response;
+        
     }
 
 }

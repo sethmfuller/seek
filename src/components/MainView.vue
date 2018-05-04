@@ -27,9 +27,10 @@
       </main-content>
 
       <!-- Next Chapter Button -->
-      <div 
-        class="chapter-button noselect" 
-        id="right-chapter-button">
+      <div
+        class="chapter-button noselect"
+        id="right-chapter-button"
+      >
         <i class="material-icons">arrow_forward</i>
       </div>
     </div>

@@ -5,8 +5,10 @@ class Response
     // Default Constructor
     constructor (response)
     {
+        console.log(response);
+
         // Set member variables
-        let split_book_name = response.book_name.split(' ');
+        let split_book_name = response.reference.split(' ');
 
         // Split up the book name in order to get the book name and chapter serperated
         if (split_book_name.length > 2)
