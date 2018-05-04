@@ -10,8 +10,15 @@
       :bible_="bible_"
       :spinner_="spinner_"
       :search_="search_"
+      :dropdown_="dropdown_"
       @nextChapter=nextChapter
-      @prevChapter=prevChapter>
+      @prevChapter=prevChapter
+      @bookSelect="bookSelect"
+      @chapterSelect="chapterSelect"
+      @versionSelect="versionSelect"
+      @chooseBook="chooseBook"
+      @chooseChapter="chooseChapter"
+      @chooseVersion="chooseVersion">
     </main-view>
     
   </div>
@@ -34,7 +41,7 @@ data() {
     bible_: false,
     spinner_: true,
     search_: false,
-    dropdown_: false,
+    dropdown_: '',
     request_: null,
     response_: null,
   }
@@ -75,6 +82,66 @@ methods: {
     
     // Make Request for Next Chapter
     this.request_.prevChapter().then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
+  },
+
+  bookSelect: function() {
+    this.dropdown_ = 'book';
+  },
+
+  chapterSelect: function() {
+    this.dropdown_ = 'chapter';
+  },
+
+  versionSelect: function() {
+    this.dropdown_ = 'version';
+  },
+
+  chooseBook: function(book) {
+    // Change View
+    this.dropdown_ = '';
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+
+    // Make Request for Specific Book
+    this.request_.chooseBook(book).then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
+  },
+
+  chooseChapter: function(chapter) {
+    // Change View
+    this.dropdown_ = '';
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+
+    // Make Request for Specific Book
+    this.request_.chooseChapter(chapter).then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
+  },
+
+  chooseVersion: function(version) {
+    // Change View
+    this.dropdown_ = '';
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+
+    // Make Request for Specific Book
+    this.request_.chooseVersion(version).then(response => {
       this.response_ = response;
       this.spinner_= false;
       this.search_ = false;

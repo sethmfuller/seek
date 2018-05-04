@@ -2,17 +2,17 @@
 <div id="dropdown">
 
     <!-- Dropdown for Books of the Bible -->
-    <div id="books" v-if="dropdownDataType == 'book'">
+    <div id="books" v-if="dropdown_ == 'book'">
         <!-- Sub Heading -->
         <h2 class="testament">Old Testament</h2><div></div>
         <div class="box-containers">
-        <div 
-            class="button"
-            v-for='(book, index) in oldTestament'
-            :key="index"
-            @click="chooseBook(book)">
-            {{book}}
-        </div>
+            <div
+                class="button"
+                v-for="(book, index) in this.oldTestament"
+                :key="index"
+                @click="chooseBook(index)">
+                {{book}}
+            </div>
         </div>
         
         <!-- Sub Heading -->
@@ -20,40 +20,40 @@
         
         <div 
             class="box-containers">
-            <div 
+            <div
                 class="button"
-                v-for='(book, index) in newTestament'
-                v-bind:key="index"
-                @click="chooseBook(book)">
+                v-for='(book, index) in this.newTestament'
+                :key="index"
+                @click="chooseBook(index)">
                 {{book}}
             </div>
         </div>
     </div>
 
     <!-- Dropdown for chapters in a book -->
-    <div id="books" v-if="dropdownDataType == 'chapter'">
+    <div id="books" v-if="dropdown_ == 'chapter'">
         <h2 class="testament">Chapter</h2><div></div>
-        <div 
+        <div
             class="box-containers">
-            <div 
+            <div
                 class="button"
-                v-for='(chapter, index) in chapters'
-                v-bind:key = "index"
-                @click="chooseSpecificChapter('', chapter)">
-                {{chapter}}
+                v-for='index = 1; index <= ; index++'
+                :key = "index"
+                @click="chooseChapter(index)">
+                {{index}}
             </div>
         </div>
     </div>
 
     <!-- Dropdown for versions of the Bible -->
-    <div id="books" v-if="dropdownDataType == 'version'">
+    <div id="books" v-if="dropdown_ == 'version'">
         <h2 class="testament">Version</h2><div></div>
         <div 
             class="box-containers">
             <div 
                 class="version-button"
                 style="width=150px"
-                v-for='version in versions'
+                v-for='version in bibleVersions'
                 v-bind:key="version"
                 @click="chooseVersion(version)">
                 {{version}}
@@ -65,53 +65,49 @@
 </template>
 
 <script>
-import {chapters, abrevOldTestament, abrevNewTestament, versions} from '../assets/Bible.js'
+import { abrevOldTestament, abrevNewTestament, versions, current_book_id} from '../assets/Bible.js'
 export default {
     name: 'drop-down',
 
-    props: ['book', 'chapter', 'dropdownDataType', 'bookid'],
+    props: ['dropdown_', 'response_'],
 
     data() {
         return {
-
-        }
-    },
-
-    methods: {
-        chooseBook: function(book) {
-            this.$emit('chooseBook', book);
-        },
-
-        chooseSpecificChapter: function(book, chapter) {
-            var bc_combo = {
-                book: book,
-                chapter: chapter
-            }
-            this.$emit('chooseSpecificChapter', bc_combo);
-        },
-
-        chooseVersion: function(version) {
-            this.$emit('chooseVersion', version);
+            
         }
     },
 
     computed: {
+
         oldTestament: function() {
             return abrevOldTestament;
         },
 
         newTestament: function() {
-            return abrevNewTestament;
+            return abrevOldTestament;
         },
 
-        versions: function() {
+        bibleVersions: function() {
             return versions;
+        }
+    },
+
+    methods: {
+        chooseBook: function(book)
+        {
+            this.$emit('chooseBook', book);
         },
 
-        chapters: function() {
-            return chapters[this.bookid - 1];
+        chooseChapter: function(chapter)
+        {
+            this.$emit('chooseChapter', chapter);
+        },
+
+        chooseVersion: function(version)
+        {
+            this.$emit('chooseVersion', version);
         }
-    }
+    },
 }
 </script>
 

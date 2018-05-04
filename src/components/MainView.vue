@@ -3,13 +3,21 @@
 
     <!-- Navigation Bar -->
     <navigation
-      :response_="response_">
+      :response_="response_"
+      @bookSelect="bookSelect"
+      @chapterSelect="chapterSelect"
+      @versionSelect="versionSelect">
     </navigation> 
 
     <!-- Dropdown Menu -->
-    <!-- <drop-down
+    <drop-down
+      v-if="dropdown_ !='' "
+      @chooseBook="chooseBook"
+      @chooseChapter="chooseChapter"
+      @chooseVersion="chooseVersion"
+      :dropdown_="dropdown_"
       :response_="response_">
-    </drop-down> -->
+    </drop-down>
 
     <!-- Main Content -->
     <div id="container">
@@ -57,7 +65,7 @@ export default {
     DropDown
   },
 
-  props: ['response_', 'bible_', 'spinner_', 'search_'],
+  props: ['response_', 'bible_', 'spinner_', 'search_', 'dropdown_'],
 
   methods: {
     
@@ -67,6 +75,33 @@ export default {
 
     prevChapter: function() {
       this.$emit('prevChapter');
+    },
+
+    bookSelect: function() {
+      this.$emit('bookSelect');
+    },
+
+    chapterSelect: function() {
+      this.$emit('chapterSelect');
+    },
+
+    versionSelect: function() {
+      this.$emit('versionSelect');
+    },
+
+    chooseBook: function(book)
+    {
+      this.$emit('chooseBook', book);
+    },
+
+    chooseChapter: function(chapter)
+    {
+      this.$emit('chooseChapter', chapter);
+    },
+
+    chooseVersion: function(version)
+    {
+      this.$emit('chooseVersion', version);
     }
   },
 

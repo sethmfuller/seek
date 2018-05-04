@@ -1,5 +1,5 @@
 import { fetchData } from '../api/api_calls.js'
-import {chapters, book_names, book_nums} from '../assets/Bible.js'
+import {book_names, book_nums, book} from '../assets/Bible.js'
 import { Response } from './Response.js'
 
 class Request
@@ -19,7 +19,7 @@ class Request
         this.current_book_ = book;
         this.current_book_id_ = 0;
         this.current_chapter_ = chapter;
-        this.current_translation_ = translation; 
+        this.current_translation_ = translation;
 
         return fetchData(`${book} ${chapter}?translation=${translation}`).then(response => {
             return new Response(response);
@@ -76,6 +76,38 @@ class Request
         {
             this.current_chapter_--;
         }
+        return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
+            return new Response(response);
+        });
+    }
+
+    // Choose Book
+    chooseBook (book)
+    {
+        this.current_book_id_ = book;
+        this.current_book_ = book_names[book];
+        this.current_chapter_ = 1;
+
+        return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
+            return new Response(response);
+        });
+    }
+
+    // Choose Chapter
+    chooseChapter (chapter)
+    {
+        this.current_chapter_ = chapter;
+
+        return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
+            return new Response(response);
+        });
+    }
+
+    // Choose Version
+    chooseVersion (version)
+    {
+        this.current_translation_ = version;
+
         return fetchData(`${this.current_book_} ${this.current_chapter_}?translation=${this.current_translation_}`).then(response => {
             return new Response(response);
         });

@@ -4,7 +4,7 @@
         <p id="text">
             <span 
                 v-for="(verse, index) in response_.get_verse_array()"
-                v-bind:key="index">
+                :key="index">
                 <sup>{{verse.get_verse_number()}}</sup>
                 {{verse.get_text()}}
             </span>

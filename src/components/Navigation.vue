@@ -1,19 +1,22 @@
 <template>
   <nav>
     <div id="book-selections">
-      <div 
+      <div
+        @click="bookSelect()"
         class="selection">
         <h2>{{this.response_.get_book_name()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
 
       <div
+      @click="chapterSelect()"
         class="selection">
         <h2>{{this.response_.get_chapter_number()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
       </div>
 
-      <div 
+      <div
+        @click="versionSelect()"
         class="selection">
         <h2>{{this.response_.get_translation_name()}}</h2>
         <i class="material-icons dropdowns noselect">arrow_drop_down</i>
@@ -38,7 +41,18 @@ name: 'navigation',
 props: ['response_'],
 
 methods: {
-  
+
+  bookSelect: function() {
+    this.$emit('bookSelect');
+  },
+
+  chapterSelect: function() {
+    this.$emit('chapterSelect');
+  },
+
+  versionSelect: function() {
+    this.$emit('versionSelect');
+  }
 },
 
 }
