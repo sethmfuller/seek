@@ -21,7 +21,7 @@ class Request
         fetchData(`${book} ${chapter}?translation=${translation}`).then(response => {
             return new Response(response);
         });
-
+        
         
     }
 

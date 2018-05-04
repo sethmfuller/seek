@@ -37,6 +37,7 @@ data() {
 created: function() {
   this.request = new Request();
   this.response = this.request.initial_request('Genesis', 1, 'web');
+  console.log(this.response);
 },
 
 methods: {

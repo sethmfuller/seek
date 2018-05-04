@@ -5,7 +5,6 @@ class Response
     // Default Constructor
     constructor (response)
     {
-        console.log(response);
 
         // Set member variables
         let split_book_name = response.reference.split(' ');
