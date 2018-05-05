@@ -1,41 +1,52 @@
 <template>
   <main>
-    <navigation 
-      @changeView="changeView"
-      @referenceClick="referenceClick"
-      @chooseVersion="chooseVersion"
-      :view="view"
-      :bible="bible"
-      :verse="verse"
-      :book="book"
-      :chapter="chapter"
-      :version="version"
-    ></navigation> 
+
+    <!-- Navigation Bar -->
+    <navigation
+      :response_="response_"
+      @bookSelect="bookSelect"
+      @chapterSelect="chapterSelect"
+      @versionSelect="versionSelect">
+    </navigation> 
+
+    <!-- Dropdown Menu -->
     <drop-down
-      v-if="dropdown == true"
+      v-if="dropdown_ !='' "
       @chooseBook="chooseBook"
-      @chooseSpecificChapter="chooseSpecificChapter"
+      @chooseChapter="chooseChapter"
       @chooseVersion="chooseVersion"
-      :dropdownDataType="dropdownDataType"
-      :bookid="bookid">
+      :dropdown_="dropdown_"
+      :response_="response_">
     </drop-down>
-    <div id="container">
+
+    <!-- Main Content -->
+    <div 
+      id="container"
+      @click="closeDropdown()"
+    >
+
+      <!-- Previous Chapter Button -->
       <div 
         class="chapter-button noselect" 
         id="left-chapter-button"
-        @click="previousChapter()">
-        <i class="material-icons">arrow_back</i>
+        @click="prevChapter()">
+          <i class="material-icons">arrow_back</i>
       </div>
+
+      <!-- Main Content -->
       <main-content
-        @closeDropdown="closeDropdown"
-        :view="view"
-        :bible="bible"
-        :verse="verse">
+        :response_="response_"
+        :bible_="bible_"
+        :spinner_="spinner_"
+        :search_="search_">
       </main-content>
-      <div 
-        class="chapter-button noselect" 
+
+      <!-- Next Chapter Button -->
+      <div
+        class="chapter-button noselect"
         id="right-chapter-button"
-        @click="nextChapter()">
+        @click="nextChapter()"
+      >
         <i class="material-icons">arrow_forward</i>
       </div>
     </div>
@@ -57,42 +68,50 @@ export default {
     DropDown
   },
 
-  props: ['view', 'bible', 'verse', 'book', 'chapter', 'version', 'dropdown', 'dropdownDataType', 'bookid'],
+  props: ['response_', 'bible_', 'spinner_', 'search_', 'dropdown_'],
 
   methods: {
-    // Change View
-    changeView: function(view){
-      this.$emit('changeView', view);
-    },
-
-    previousChapter: function() {
-      this.$emit('previousChapter');
-    },
-
+    
     nextChapter: function() {
       this.$emit('nextChapter');
     },
 
-    referenceClick: function(clickType) {
-      this.$emit('referenceClick', clickType);
+    prevChapter: function() {
+      this.$emit('prevChapter');
     },
 
-    closeDropdown: function() {
-      this.$emit('closeDropdown');
+    bookSelect: function() {
+      this.$emit('bookSelect');
     },
-    
-    chooseBook: function(book){
+
+    chapterSelect: function() {
+      this.$emit('chapterSelect');
+    },
+
+    versionSelect: function() {
+      this.$emit('versionSelect');
+    },
+
+    chooseBook: function(book)
+    {
       this.$emit('chooseBook', book);
     },
 
-    chooseSpecificChapter: function(bc_combo){
-      this.$emit('chooseSpecificChapter', bc_combo);
+    chooseChapter: function(chapter)
+    {
+      this.$emit('chooseChapter', chapter);
     },
-    
-    chooseVersion: function(version) {
-            this.$emit('chooseVersion', version);
+
+    chooseVersion: function(version)
+    {
+      this.$emit('chooseVersion', version);
+    },
+
+    closeDropdown: function()
+    {
+      this.$emit('closeDropdown');
     }
-  }
+  },
 
 }
 </script>

@@ -1,32 +1,33 @@
 <template>
   <div id="app">
+
+    <!-- Seek.com Logo -->
     <img id="logo" src="./assets/Logo_Text.svg" alt="Seek Logo">
+
+    <!-- Main View -->
     <main-view
-      @changeView="changeView"
-      @previousChapter="previousChapter"
-      @nextChapter="nextChapter"
-      @referenceClick="referenceClick"
-      @closeDropdown="closeDropdown"
+      :response_="response_"
+      :bible_="bible_"
+      :spinner_="spinner_"
+      :search_="search_"
+      :dropdown_="dropdown_"
+      @nextChapter=nextChapter
+      @prevChapter=prevChapter
+      @bookSelect="bookSelect"
+      @chapterSelect="chapterSelect"
+      @versionSelect="versionSelect"
       @chooseBook="chooseBook"
-      @chooseSpecificChapter="chooseSpecificChapter"
+      @chooseChapter="chooseChapter"
       @chooseVersion="chooseVersion"
-      :view="view"
-      :bible="bible"
-      :verse="verse"
-      :book="book"
-      :chapter="chapter"
-      :version="version"
-      :dropdown="dropdown"
-      :dropdownDataType="dropdownDataType"
-      :bookid="bookid">
+      @closeDropdown="closeDropdown">
     </main-view>
+    
   </div>
 </template>
 
 <script>
 import MainView from './components/MainView.vue'
-import {fetchData} from './api/api_calls.js'
-import {chapters, books, allBooks} from './assets/Bible.js'
+import { Request } from './classes/Request.js'
 
 export default {
 
@@ -38,171 +39,135 @@ components: {
 
 data() {
   return {
-    view: 'bible',
-    bible: '',
-    verse: '',
-    book: '',
-    chapter: '',
-    version: '',
-    bookid: '',
-    chapterid: '',
-    dropdown: false,
-    dropdownDataType: ''
+    bible_: false,
+    spinner_: true,
+    search_: false,
+    dropdown_: '',
+    request_: null,
+    response_: null,
   }
+},
+
+created: function(){
+  this.request_ = new Request();
+  this.request_.initial_request('Genesis', 1, 'web').then(response => {
+    this.response_ = response;
+    this.spinner_= false;
+    this.search_ = false;
+    this.bible_ = true;
+  });
 },
 
 methods: {
-
-  // Make api call
-  changeView: function(info) 
-  {
-    this.view = info;
-    if (info != 'search') {
-      this.book = (info == "verse") ? this.verse.reference.split(' ')[0] : this.bible.reference.split(' ')[0];
-      this.chapter = (info == "verse") ? this.verse.verses[0].chapter : this.bible.reference.split(' ')[1];
-      this.version = (info == "verse") ? this.verse.translation_id.toUpperCase() : this.bible.translation_id.toUpperCase();
-    }
-  },
-
-  specificChapter: function(book, chapter) {
-    fetchData(`${book} ${chapter}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.version = data.translation_id.toUpperCase();
-    });
-  },
-
-  previousChapter: function() {
-    var computed = this.computedPreviousChapter();
-    fetchData(`${computed.name} ${computed.number}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.chapterid = computed.number;
-      this.version = data.translation_id.toUpperCase();
-    });
-  },
-
   nextChapter: function() {
-    var computed = this.computedNextChapter();
-    fetchData(`${computed.name} ${computed.number}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.bookid = parseInt(data.reference.split(' ')[0]);
-      this.chapter = data.reference.split(' ')[1];
-      this.chapterid = computed.number;
-      this.version = data.translation_id.toUpperCase();
+
+    // Change View
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+    
+    // Make Request for Next Chapter
+    this.request_.nextChapter().then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
     });
   },
 
-  computedPreviousChapter: function() {
-    if (this.chapterid == 1) {
-      this.bookid = (this.bookid == 1) ? 66 : this.bookid - 1;
-      this.chapterid = chapters[this.bookid - 1].length;
-      return {
-        name: books[this.bookid-1],
-        number: this.chapterid
-      }
-    }
-    else {
-      this.chapterid--;
-      return {
-        name: books[this.bookid-1],
-        number:this.chapterid
-      }
-    }
+  prevChapter: function() {
+    // Change View
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+    
+    // Make Request for Next Chapter
+    this.request_.prevChapter().then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
   },
 
-  computedNextChapter: function() {
-    if (this.chapterid == chapters[this.bookid-1].length) {
-      this.bookid = (this.bookid == 66) ? 1 : this.bookid + 1;
-      this.chapterid = 1;
-      return {
-        name: books[this.bookid-1],
-        number: this.chapterid
-      }
-    }
-    else {
-      this.chapterid++;
-      return {
-        name: books[this.bookid-1],
-        number: this.chapterid
-      }
-    }
+  bookSelect: function() {
+    this.dropdown_ = 'book';
+
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 0.2;
   },
 
-  referenceClick: function(clickType){
-    this.dropdown = true;
-    this.dropdownDataType = clickType;
-    document.getElementById("text").style.opacity = 0.1;
-    document.getElementById("text").style.overflowY = "hidden";
+  chapterSelect: function() {
+    this.dropdown_ = 'chapter';
+
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 0.2;
   },
 
-  closeDropdown: function() {
-    this.dropdown = false;
-    document.getElementById("text").style.opacity = 1;
-    document.getElementById("text").style.overflowY = "scroll";
+  versionSelect: function() {
+    this.dropdown_ = 'version';
+
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 0.2;
   },
 
   chooseBook: function(book) {
-    fetchData(`${book} ${1}?translation=${this.version}`).then(data => {
-      this.bible = data;
-      this.bookid = allBooks.indexOf(book);
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.chapterid = 1;
-      this.version = data.translation_id.toUpperCase();
-      this.dropdown = false;
-      document.getElementById("text").style.opacity = 1;
-      document.getElementById("text").style.overflowY = "scroll";
+    // Change View
+    this.dropdown_ = '';
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+
+    // Make Request for Specific Book
+    this.request_.chooseBook(book).then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+
+      
     });
   },
 
-  chooseSpecificChapter: function(bc_combo) {
-    if (bc_combo.book == "") {
-      this.chapter = bc_combo.chapter;
-      this.chapterid = bc_combo.chapter;
-      console.log(this.chapterid);
-      fetchData(`${this.book} ${this.chapter}`).then(data => {
-        this.bible = data;
-        this.book = data.reference.split(' ')[0];
-        this.bookid = allBooks.indexOf(this.book);
-        this.chapter = data.reference.split(' ')[1];
-        this.chapterid = bc_combo.chapter;
-        console.log(this.chapterid);
-        this.version = data.translation_id.toUpperCase();
-        this.dropdown = false;
-        document.getElementById("text").style.opacity = 1;
-        document.getElementById("text").style.overflowY = "scroll";
-      });
-    }
+  chooseChapter: function(chapter) {
+    // Change View
+    this.dropdown_ = '';
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+
+    // Make Request for Specific Book
+    this.request_.chooseChapter(chapter).then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
+    });
   },
 
   chooseVersion: function(version) {
-    fetchData(`${this.book} ${this.chapter}?translation=${version}`).then(data => {
-      this.bible = data;
-      this.book = data.reference.split(' ')[0];
-      this.chapter = data.reference.split(' ')[1];
-      this.version = data.translation_id.toUpperCase();
-      this.dropdown = false;
-      document.getElementById("text").style.opacity = 1;
-      document.getElementById("text").style.overflowY = "scroll";
+    // Change View
+    this.dropdown_ = '';
+    this.search_ = false;
+    this.bible_ = false;
+    this.spinner_ = true;
+
+    // Make Request for Specific Book
+    this.request_.chooseVersion(version).then(response => {
+      this.response_ = response;
+      this.spinner_= false;
+      this.search_ = false;
+      this.bible_ = true;
     });
+  },
+
+  closeDropdown: function(){
+    this.dropdown_ = '';
+    // Change Opacity and Scrolling
+    document.getElementById("bible-id").style.opacity = 1;
   }
 },
 
-created: function() {
-  fetchData('genesis 1').then(data => {
-    this.bible = data;
-    this.book = data.reference.split(' ')[0];
-    this.chapter = data.reference.split(' ')[1];
-    this.version = data.translation_id.toUpperCase();
-    this.bookid = 1;
-    this.chapterid = 1;
-  });
-  fetchData('matthew 12:2').then(data => this.verse = data);
-}
 }
 </script>
 

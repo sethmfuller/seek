@@ -1,41 +1,35 @@
 <template>
-  <div @click="closeDropdown">
-      <bible 
-        v-if="this.view=='bible'"
-        :bible="bible">
+  <div>
+      <!-- Bible -->
+      <bible
+        v-if="this.bible_"
+        :response_="response_">
       </bible>
 
-      <verse
-        v-if="this.view=='verse'"
-        :verse="verse">
-      </verse>
-
-      <search
-        v-if="this.view=='search'">
-      </search>
+      <semipolar-spinner
+          v-if="this.spinner_"
+          :animation-duration="2000"
+          :color="'#673AB8'"
+      />
   </div>
 </template>
 
 <script>
 import Bible from './Bible.vue'
-import Verse from './VerseOfDay.vue'
-import Search from './Search.vue'
+import {HollowDotsSpinner, SemipolarSpinner} from 'epic-spinners'
 
 export default {
 name: 'main-content',
 
 components: {
   Bible,
-  Verse,
-  Search,
+  HollowDotsSpinner,
+  SemipolarSpinner
 },
 
-props: ['view', 'bible', 'verse'],
+props: ['response_', 'bible_', 'spinner_', 'search_'],
 
 methods: {
-  closeDropdown: function() {
-    this.$emit('closeDropdown');
-  }
 }
 
 }
@@ -46,7 +40,8 @@ div
 {
     width: calc(100% - 55px);
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-
 </style>
